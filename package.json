@@ -4,8 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "node app.js",
-    "dev": "nodemon app.js"
+    "start": "concurrently 'node app.js' 'node scripts/updateContractsStatus.js'",
+    "dev": "concurrently 'nodemon app.js' 'nodemon scripts/updateContractsStatus.js'"
   },
   "repository": {
     "type": "git",
