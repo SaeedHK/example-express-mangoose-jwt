@@ -17,6 +17,7 @@ app.use(express.json());
 // Routes
 app.use('/api/user', require('./routes/user'));
 app.use('/api/contract', require('./routes/contract'));
+app.use('/api/option', require('./routes/option'));
 
 const PORT = 3000;
 
