@@ -6,10 +6,10 @@ set the commands accordingly.
 
 ## Getting started
 
-To start the server we need to do these steps:
+To start the server we need to follow these steps:
 
 1. install dependencies with `npm install`,
-1. add fist admin
+1. add the first admin with
 
 ```bash
 ADMIN_EMAIL="<FIRST_ADMIN_EMAIL>" \
@@ -24,7 +24,7 @@ npm run create-first-admin
 MONGODB_URI="<MONGODB_URI>" npm run feed-options
 ```
 
-The will feed all static options in `const/options.js` to database.
+This will feed the database with all options exported in `const/options.js`.
 
 1. run `dev` server using the database URI `<MONGODB_URI>`, with
 
@@ -34,8 +34,8 @@ MONGODB_URI="<MONGODB_URI>" npm run dev
 
 This command will run concurrently
 
-- ExpressJS server,
-- script `scripts/updateContractsStatus.js` that updates contracts status on regular basis (currently every 1 min).
+- the ExpressJS server,
+- the script `scripts/updateContractsStatus.js` that updates the contracts status on regular basis (currently every 1 min).
 
 **Note:** Make sure to put `<MONGODB_URI>` within the quotes.
 
@@ -43,69 +43,69 @@ This command will run concurrently
 
 ### User
 
-```
+```json
 {
-  email: {
-    type: String,
-    required: true,
+  "email": {
+    "type": String,
+    "required": true
   },
-  password: {
-    type: String,
-    required: true,
+  "password": {
+    "type": String,
+    "required": true
   },
-  isAdmin: {
-    type: Boolean,
-    default: false,
+  "isAdmin": {
+    "type": Boolean,
+    "default": false
   },
-  createdAt: {
-    type: Date,
-    default: Date.now,
+  "createdAt": {
+    "type": Date,
+    "default": Date.now
   }
 }
 ```
 
 ### Option
 
-```
+```json
 {
-  title: {
-    type: String,
-    required: true,
+  "title": {
+    "type": String,
+    "required": true
   },
-  description: {
-    type: String,
-    required: true,
+  "description": {
+    "type": String,
+    "required": true
   }
 }
 ```
 
 ### Contract
 
-```
+```json
 {
-  startAt: {
-    type: Date,
-    require: true,
+  "startAt": {
+    "type": Date,
+    "require": true
   },
-  options: {
-    type: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Option' }],
-    required: true,
+  "options": {
+    "type": [{ "type": mongoose.Schema.Types.ObjectId, "ref": "Option" }],
+    "required": true
   },
-  clients: {
-    type: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }],
-    required: true,
+  "clients": {
+    "type": [{ "type": mongoose.Schema.Types.ObjectId, "ref": "User" }],
+    "required": true
   },
-  status: {
-    type: String,
-    default: PENDING,
-    enum: [PENDING, ACTIVE, FINISHED],
+  "status": {
+    "type": String,
+    "default": PENDING,
+    "enum": [PENDING, ACTIVE, FINISHED]
   },
-  finishAt: {
-    type: Date,
+  "finishAt": {
+    "type": Date
   },
-  createdAt: {
-    type: Date,
-    default: Date.now,
+  "createdAt": {
+    "type": Date,
+    "default": Date.now
   }
 }
 ```
@@ -138,6 +138,8 @@ It returns a JSON response containing the token:
 ```
 {token: ....}
 ```
+
+**Note:** You might need to use these tokens in protected endpoints (should be used as `<TOKEN>` or `<ADMIN_TOKEN>` in the following)
 
 ##### `POST /api/user/addadmin`
 
@@ -175,7 +177,7 @@ curl -X GET \
      localhost:3000/api/option
 ```
 
-##### `GET /api/option/<OPTION_ID>`
+##### `GET /api/option?optionId=<OPTION_ID>`
 
 ##### Desc: get option by id
 
@@ -183,7 +185,7 @@ curl -X GET \
 curl -X GET \
      -H "Content-Type:application/json" \
      -H "Authorization: Bearer <TOKEN>" \
-     localhost:3000/api/option/<OPTION_ID>
+     localhost:3000/api/option?optionId=<OPTION_ID>
 ```
 
 ##### `POST /api/option/`
@@ -199,8 +201,6 @@ curl -X POST \
 ```
 
 ## Contract management
-
-All contract endpoints requires valid tokens.
 
 **Note:** All dates should be in format 'dd/mm/yyyy' (e.g.'01/01/2021')
 
@@ -253,4 +253,3 @@ curl -X POST \
 ## Features
 
 - All passwords are encrypted, using `bcryptjs`, then registered in database.
-
