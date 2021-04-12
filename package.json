@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "start": "concurrently 'node app.js' 'node scripts/updateContractsStatus.js'",
-    "dev": "concurrently 'nodemon app.js' 'nodemon scripts/updateContractsStatus.js'"
+    "dev": "concurrently 'nodemon app.js' 'nodemon scripts/updateContractsStatus.js'",
+    "create-first-admin": "node scripts/createFirstAdmin.js"
   },
   "repository": {
     "type": "git",
