@@ -43,7 +43,7 @@ This command will run concurrently
 
 ### User
 
-```json
+```js
 {
   "email": {
     "type": String,
@@ -66,7 +66,7 @@ This command will run concurrently
 
 ### Option
 
-```json
+```js
 {
   "title": {
     "type": String,
@@ -81,7 +81,7 @@ This command will run concurrently
 
 ### Contract
 
-```json
+```js
 {
   "startAt": {
     "type": Date,
