@@ -14,6 +14,9 @@ const app = express();
 // Body parser
 app.use(express.json());
 
+// Routes
+app.use('/api/user', require('./routes/user'));
+
 const PORT = 3000;
 
 app.listen(PORT, console.log(`Server is up and running on ${PORT}.`));
