@@ -33,4 +33,20 @@ router.get('/:optionId', auth, async (req, res) => {
   }
 });
 
+// Create option. Only admins are allowed
+router.post('/', auth, async (req, res) => {
+  try {
+    if (req.userIsAdmin) {
+      const { title, description } = req.body;
+      await Option.create({ title, description });
+      res.status(200).send('Create option done.');
+    } else {
+      res.status(400).send('Only admins are allowed create options');
+    }
+  } catch (err) {
+    console.log(err);
+    res.status(400).send('Creating options failed');
+  }
+});
+
 module.exports = router;
