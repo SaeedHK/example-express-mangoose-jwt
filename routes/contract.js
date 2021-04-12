@@ -38,4 +38,21 @@ router.get('/:contractId', auth, async (req, res) => {
   }
 });
 
+// Create contract. Only admins are allowed
+router.post('/', auth, async (req, res) => {
+  try {
+    if (req.userIsAdmin) {
+      const { options, clients, startAt } = req.body;
+      const contract = new Contract({ options, clients, startAt: formatDate(startAt) });
+      await contract.save();
+      res.status(200).send(`Create contract successfuly with id ${contract._id}.`);
+    } else {
+      res.status(400).send('Only admins are allowed create contracts');
+    }
+  } catch (err) {
+    console.log(err);
+    res.status(400).send('Create contract failed');
+  }
+});
+
 module.exports = router;
