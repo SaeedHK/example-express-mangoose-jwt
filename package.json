@@ -6,7 +6,8 @@
   "scripts": {
     "start": "concurrently 'node app.js' 'node scripts/updateContractsStatus.js'",
     "dev": "concurrently 'nodemon app.js' 'nodemon scripts/updateContractsStatus.js'",
-    "create-first-admin": "node scripts/createFirstAdmin.js"
+    "create-first-admin": "node scripts/createFirstAdmin.js",
+    "feed-options": "node scripts/feedOptions.js"
   },
   "repository": {
     "type": "git",
