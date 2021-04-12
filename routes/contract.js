@@ -1,6 +1,10 @@
+const moment = require('moment');
 const router = require('express').Router();
 const auth = require('../middleware/auth');
 const Contract = require('../models/Contract');
+
+// convert date string to epoch time. date should be in format 'DD/MM/YYYY' (e.g. '01/01/2021')
+const formatDate = (date) => moment(date, 'DD/MM/YYYY').valueOf();
 
 // Get all contract
 router.get('/', auth, async (req, res) => {
