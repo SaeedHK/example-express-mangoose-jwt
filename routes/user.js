@@ -1,4 +1,5 @@
 const router = require('express').Router();
+const jwt = require('jsonwebtoken');
 const auth = require('../middleware/auth');
 const bcrypt = require('bcryptjs');
 const User = require('../models/User');
@@ -60,6 +61,28 @@ router.post('/addadmin', auth, async (req, res) => {
         console.log(err);
         res.status(400).send(`Failed creation admin with email ${email}`);
       }
+    }
+  }
+});
+
+// Generate token
+router.get('/gentoken', async (req, res) => {
+  const { email, password } = req.query;
+  if (!email || !password) {
+    res.status(400).send('Both email and password are obligatory');
+  } else {
+    const user = await User.findOne({ email });
+    if (user) {
+      // Validate password hash
+      const validPass = await bcrypt.compare(password, user.password);
+      if (validPass) {
+        const token = jwt.sign({ _id: user._id }, 'jwt_secret', { expiresIn: '1h' });
+        res.status(200).send({ token });
+      } else {
+        res.status(400).send('Password is wrong');
+      }
+    } else {
+      res.status(400).send(`No user found with email ${email}`);
     }
   }
 });
