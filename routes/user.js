@@ -38,4 +38,30 @@ router.post('/signup', async (req, res) => {
   }
 });
 
+// Add admin user
+router.post('/addadmin', auth, async (req, res) => {
+  const { email, password } = req.body;
+  if (!email || !password) {
+    res.status(400).send('Both email and password are obligatory');
+  } else if (!req.userIsAdmin) {
+    res.status(400).send('Only admin users can add new admin');
+  } else {
+    const emailExist = await User.findOne({ email });
+    if (emailExist) {
+      res.status(400).send(`User with email ${email} already exists`);
+    } else {
+      try {
+        // Encrypt password to register to db
+        const salt = await bcrypt.genSalt(10);
+        const hashedPassword = await bcrypt.hash(password, salt);
+        await User.create({ email, password: hashedPassword, isAdmin: true });
+        res.status(200).send(`Create admin with email ${email}`);
+      } catch (err) {
+        console.log(err);
+        res.status(400).send(`Failed creation admin with email ${email}`);
+      }
+    }
+  }
+});
+
 module.exports = router;
