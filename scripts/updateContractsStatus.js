@@ -13,8 +13,7 @@ const updateContractsStatus = async () => {
     for (const contract of contracts) {
       let { startAt, finishAt } = contract;
       let currentDate = Date.now();
-      let status;
-      if (currentDate < startAt) status = PENDING;
+      let status = PENDING;
       if (currentDate >= startAt && currentDate < finishAt) status = ACTIVE;
       if (currentDate >= finishAt) status = FINISHED;
       await contract.update({ status });
