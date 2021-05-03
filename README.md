@@ -1,4 +1,4 @@
-# Unkle backend test
+# Example API with express, mangoose and JWT
 
 This is an API written in Nodejs (ExpressJS) and uses MONGODB as its database. In the following, we explain how to use
 `curl` to send HTTP request to the API. You might also use [Postman](https://www.postman.com/) and
